@@ -6,11 +6,23 @@
 /*   By: jsarda <jsarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 11:17:02 by jsarda            #+#    #+#             */
-/*   Updated: 2024/01/31 14:49:48 by jsarda           ###   ########.fr       */
+/*   Updated: 2024/02/02 18:37:19 by jsarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+int			received = 0;
+
+static void	ft_confirm(int signal)
+{
+	if (signal == SIGUSR2)
+	{
+		received = 1;
+	}
+}
+
+#include <stdio.h>
 
 void	send_bits(int pid, char c)
 {
@@ -19,11 +31,14 @@ void	send_bits(int pid, char c)
 	bit = 0;
 	while (bit < 8)
 	{
+		received = 0;
 		if ((c & (0b00000001 << bit)) != 0)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(500);
+		while (received == 0)
+			usleep(100);
+		fflush(stdout);
 		bit++;
 	}
 }
@@ -34,9 +49,12 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
+	printf("%d", getpid());
+	fflush(stdout);
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);
+		signal(SIGUSR2, ft_confirm);
 		while (argv[2][i])
 		{
 			send_bits(pid, argv[2][i]);

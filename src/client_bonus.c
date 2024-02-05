@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarda <jsarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 11:17:02 by jsarda            #+#    #+#             */
-/*   Updated: 2024/02/05 13:50:57 by jsarda           ###   ########.fr       */
+/*   Created: 2024/02/05 13:50:08 by jsarda            #+#    #+#             */
+/*   Updated: 2024/02/05 13:50:10 by jsarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	ft_confirm(int signal)
 {
 	if (signal == SIGUSR2)
 		g_received = 1;
+	else
+		ft_printf("\033[32mReceived.\033[0m\n");
 }
 
 void	send_bits(int pid, char c)
@@ -47,6 +49,7 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);
+		signal(SIGUSR1, ft_confirm);
 		signal(SIGUSR2, ft_confirm);
 		while (argv[2][i])
 		{

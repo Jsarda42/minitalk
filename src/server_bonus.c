@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarda <jsarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 11:16:55 by jsarda            #+#    #+#             */
-/*   Updated: 2024/02/05 15:23:49 by jsarda           ###   ########.fr       */
+/*   Created: 2024/02/05 13:50:39 by jsarda            #+#    #+#             */
+/*   Updated: 2024/02/05 15:55:28 by jsarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ void	add_bit_to_string(int bit, char **str, int *str_size, int *str_capacity)
 	(*str_size)++;
 }
 
+void	print_string(char *str)
+{
+	ft_printf("%s", str);
+	free(str);
+	str = NULL;
+}
+
 void	sig_handler(int sig, siginfo_t *info, void *context)
 {
 	static int	bit;
@@ -50,11 +57,10 @@ void	sig_handler(int sig, siginfo_t *info, void *context)
 	}
 	if (str_size > 0 && str[str_size - 1] == '\0')
 	{
-		ft_printf("%s", str);
-		free(str);
-		str = NULL;
+		print_string(str);
 		str_size = 0;
 		str_capacity = 0;
+		kill(info->si_pid, SIGUSR1);
 	}
 	kill(info->si_pid, SIGUSR2);
 }

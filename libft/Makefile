@@ -6,11 +6,11 @@
 #    By: jsarda <jsarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 13:46:01 by jsarda            #+#    #+#              #
-#    Updated: 2024/01/30 16:27:54 by jsarda           ###   ########.fr        #
+#    Updated: 2024/02/05 13:00:32 by jsarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_atoi.c ft_print_char.c ft_printf_nbr_unsigned.c ft_print_nbr.c ft_print_ptr_hexa.c ft_print_ptr.c ft_print_str.c ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_eval_format.c
+SRCS = ft_memcpy.c ft_realloc.c ft_atoi.c ft_print_char.c ft_printf_nbr_unsigned.c ft_print_nbr.c ft_print_ptr_hexa.c ft_print_ptr.c ft_print_str.c ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_eval_format.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
